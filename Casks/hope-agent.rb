@@ -1,6 +1,6 @@
 cask "hope-agent" do
-  version "0.1.2"
-  sha256 "ff65dc3bf03b4958671b8309de1ce9a76cbb658afc67997d1a5f535e9f28169f"
+  version "0.2.1"
+  sha256 "c04302622e08ea78dc69cefdf917009a0f038c6841146a446ba4d7f3354fba1e"
 
   url "https://github.com/shiwenwen/hope-agent/releases/download/v#{version}/Hope.Agent_#{version}_aarch64.dmg"
   name "Hope Agent"
@@ -13,16 +13,24 @@ cask "hope-agent" do
   end
 
   auto_updates true
-  depends_on macos: ">= :big_sur"
+  # Apple Silicon only — this release skipped the macOS Intel build lane
+  # (macos-13 runner capacity constraints in upstream release.yml).
+  # Intel Mac users have no installable arm64 path (Rosetta 2 translates
+  # Intel → Apple Silicon, not the reverse) and should stay on the prior
+  # dual-arch release until the next version that ships an x64 DMG.
+  depends_on macos: ">= :big_sur", arch: :arm64
 
   app "Hope Agent.app"
 
   binary "#{appdir}/Hope Agent.app/Contents/MacOS/hope-agent"
 
   caveats <<~EOS
-    Hope Agent is currently distributed as an Apple Silicon (arm64) build.
-    On Intel Macs it runs through Rosetta 2; macOS will prompt to install
-    Rosetta the first time you launch the app if it is not already present.
+    This release ships only the Apple Silicon (arm64) DMG. Intel Macs
+    cannot install it — Rosetta 2 translates Intel binaries to run on
+    Apple Silicon, not the reverse. Intel Mac users should remain on
+    the prior dual-arch release (download from
+    https://github.com/shiwenwen/hope-agent/releases) until a future
+    version ships an x64 DMG again.
 
     The bundle is not yet code-signed or notarized. The installer clears
     the macOS quarantine attribute so first launch should work without
