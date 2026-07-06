@@ -1,6 +1,6 @@
 cask "hope-agent" do
-  version "0.15.0"
-  sha256 "4423b68d9dbcb2328b5d03d55895722dca0ceae4ac9d9b0ab9f5c0311aa47636"
+  version "0.16.0"
+  sha256 "6552e65608356685a221bf1def53851d35c760b0daa25a5acb58948dbf218733"
 
   url "https://github.com/shiwenwen/hope-agent/releases/download/v#{version}/Hope.Agent_#{version}_aarch64.dmg"
   name "Hope Agent"
@@ -18,7 +18,7 @@ cask "hope-agent" do
   # Intel Mac users have no installable arm64 path (Rosetta 2 translates
   # Intel → Apple Silicon, not the reverse) and should stay on the prior
   # dual-arch release until the next version that ships an x64 DMG.
-  depends_on macos: ">= :big_sur", arch: :arm64
+  depends_on macos: :big_sur, arch: :arm64
 
   app "Hope Agent.app"
 
