@@ -1,6 +1,6 @@
 cask "hope-agent" do
-  version "0.34.0"
-  sha256 "177c138993262f87961788b3e41e9c86c86a1c78a626642946dab18b175369f2"
+  version "0.35.0"
+  sha256 "9f7680468f55f14c323ad71ba8a11fb202b55d14b1596ff25075275f8b1dd2bb"
 
   url "https://github.com/shiwenwen/hope-agent/releases/download/v#{version}/Hope.Agent_#{version}_aarch64.dmg"
   name "Hope Agent"
