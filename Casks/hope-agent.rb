@@ -1,8 +1,11 @@
 cask "hope-agent" do
-  version "0.70.0"
-  sha256 "1afaf45bfcd37164f20014057e1bd2c5864323cdbb662a01005352b5ea09f746"
+  arch arm: "aarch64", intel: "x64"
 
-  url "https://github.com/shiwenwen/hope-agent/releases/download/v#{version}/Hope.Agent_#{version}_aarch64.dmg"
+  version "0.70.0"
+  sha256 arm:   "1afaf45bfcd37164f20014057e1bd2c5864323cdbb662a01005352b5ea09f746",
+         intel: "d695fd400058ae923417460276b0acfd4570c5366bdc8844c51ae453e9276b99"
+
+  url "https://github.com/shiwenwen/hope-agent/releases/download/v#{version}/Hope.Agent_#{version}_#{arch}.dmg"
   name "Hope Agent"
   desc "Local-first AI assistant with cross-device sessions and IM channel routing"
   homepage "https://github.com/shiwenwen/hope-agent"
@@ -13,25 +16,13 @@ cask "hope-agent" do
   end
 
   auto_updates true
-  # Apple Silicon only — this release skipped the macOS Intel build lane
-  # (macos-13 runner capacity constraints in upstream release.yml).
-  # Intel Mac users have no installable arm64 path (Rosetta 2 translates
-  # Intel → Apple Silicon, not the reverse) and should stay on the prior
-  # dual-arch release until the next version that ships an x64 DMG.
-  depends_on macos: ">= :big_sur", arch: :arm64
+  depends_on macos: ">= :big_sur"
 
   app "Hope Agent.app"
 
   binary "#{appdir}/Hope Agent.app/Contents/MacOS/hope-agent"
 
   caveats <<~EOS
-    This release ships only the Apple Silicon (arm64) DMG. Intel Macs
-    cannot install it — Rosetta 2 translates Intel binaries to run on
-    Apple Silicon, not the reverse. Intel Mac users should remain on
-    the prior dual-arch release (download from
-    https://github.com/shiwenwen/hope-agent/releases) until a future
-    version ships an x64 DMG again.
-
     The bundle is not yet code-signed or notarized. The installer clears
     the macOS quarantine attribute so first launch should work without
     extra steps, but you may still see a Gatekeeper warning. If macOS
